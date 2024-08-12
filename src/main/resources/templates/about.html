@@ -1,23 +1,15 @@
 <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>about</title>
-</head>
-<body>
-<!--Using thymeleaf fragment-->
-<h1>This is about page</h1>
-<hr/>
-<!-- syntax is th:insert="~{fileName :: fragmentName}"-->
-<div class="host-tag" th:replace="~{base :: parent(~{::section})}">
-    <section>
-        <h2>Dynamic content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam blanditiis corporis
-            exercitationem ipsa labore, maxime minima quasi quis sint velit.
-        </p>
-        <button>Click on Dynamic content</button>
-    </section>
-</div>
-</body>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
+    <head>
+        <title>About Page</title>
+    </head>
+    <body>
+        <div id="content">
+            <h1>Welcome to about page</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptate.</p>
+        </div>
+        <script>
+            console.log("about page");
+        </script>
+    </body>
 </html>
