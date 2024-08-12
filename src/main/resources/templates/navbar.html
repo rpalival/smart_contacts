@@ -4,13 +4,19 @@
         <!-- Brand logo        -->
         <a th:href="@{'/'}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img th:src="@{'/images/contacts.png'}" class="h-8 shadow rounded-full"
-                 alt="Flowbite Logo" />
+                 alt="contacts Logo" />
             <span
                     class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Smart Contacts
             </span>
         </a>
         <!-- end of brand logo -->
         <div class="flex gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <!-- dark light theme button -->
+            <button id="theme_change_button"
+                    class="bg-gray-200 px-3 py-2 rounded-lg dark:bg-gray-600"
+            >
+                <i class="fa-solid fa-circle-half-stroke"></i> <span>Light</span>
+            </button>
             <a
                 th:href="@{'/login'}"
                 type="button"
