@@ -29,6 +29,10 @@ public class PageController {
     //    public PageController(UserService userService) {
     //        this.userService = userService;
     //    }
+    @GetMapping("/")
+    public String index(){
+        return "redirect:/home";
+    }
 
     @RequestMapping("/home")
     public String home(Model model) {
