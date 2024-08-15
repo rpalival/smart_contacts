@@ -2,7 +2,10 @@ package com.rpalival.smart_contacts.controllers;
 
 import com.rpalival.smart_contacts.entities.User;
 import com.rpalival.smart_contacts.forms.UserForm;
+import com.rpalival.smart_contacts.helpers.Message;
+import com.rpalival.smart_contacts.helpers.MessageType;
 import com.rpalival.smart_contacts.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,21 +81,35 @@ public class PageController {
     // redirect to login page
 
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm){
+    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session){
 //        System.out.println("processing registration");
 //        System.out.println(userForm);
 
-        User user = User.builder()
-                .name(userForm.getName())
-                .email(userForm.getEmail())
-                .password(userForm.getPassword())
-                .about(userForm.getAbout())
-                .phoneNumber(userForm.getPhoneNumber())
-                .profilePic("https://randomuser.me/api/portraits/women/31.jpg")
-                .build();
+//        User user = User.builder()
+//                .name(userForm.getName())
+//                .email(userForm.getEmail())
+//                .password(userForm.getPassword())
+//                .about(userForm.getAbout())
+//                .phoneNumber(userForm.getPhoneNumber())
+//                .profilePic("https://randomuser.me/api/portraits/women/31.jpg")
+//                .build();
+
+        User user = new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setAbout(userForm.getAbout());
+        user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setProfilePic("https://randomuser.me/api/portraits/women/31.jpg");
 
         User savedUser = userService.saveUser(user);
         System.out.println("User saved");
+
+        // add the message
+        Message message =
+                Message.builder().content("Registration Successful").type(MessageType.green).build();
+        session.setAttribute("message", message);
+
         return "redirect:/register";
     }
 }
