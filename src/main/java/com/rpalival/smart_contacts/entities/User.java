@@ -29,7 +29,7 @@ public class User {
     private boolean emailVerified=false;
     private boolean phoneVerified=false;
     // any other information
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private Providers provider=Providers.SELF;
     private String providerUserId;
 
