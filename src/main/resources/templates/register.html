@@ -29,6 +29,7 @@
                         th:object="${userForm}"
                         method="post"
                         class="mt-5"
+                        novalidate
                     >
                         <!-- name -->
                         <div class="mb-3">
@@ -41,6 +42,13 @@
                                 placeholder="Enter Here"
                                 required
                             />
+                            <p
+                                th:if="${#fields.hasErrors('name')}"
+                                th:errors="*{name}"
+                                class="text-red-600 px-1 py-2"
+                            >
+                                Name is required
+                            </p>
                         </div>
                         <!-- email -->
                         <div class="mb-3">
@@ -53,6 +61,12 @@
                                     placeholder="Enter Here"
                                     required
                             />
+                            <p
+                                    th:if="${#fields.hasErrors('email')}"
+                                    th:errors="*{email}"
+                                    class="text-red-600 px-1 py-2"
+                            >
+                            </p>
                         </div>
                         <!-- password -->
                         <div class="mb-3">
@@ -64,6 +78,12 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required
                             />
+                            <p
+                                    th:if="${#fields.hasErrors('password')}"
+                                    th:errors="*{password}"
+                                    class="text-red-600 px-1 py-2"
+                            >
+                            </p>
                         </div>
                         <!-- Phone -->
                         <div class="mb-3">
@@ -75,6 +95,12 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required
                             />
+                            <p
+                                    th:if="${#fields.hasErrors('phoneNumber')}"
+                                    th:errors="*{phoneNumber}"
+                                    class="text-red-600 px-1 py-2"
+                            >
+                            </p>
                         </div>
                         <!-- About Text Area -->
                         <div class="mb-3">
@@ -87,6 +113,12 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="Write here..."
                             ></textarea>
+                            <p
+                                    th:if="${#fields.hasErrors('about')}"
+                                    th:errors="*{about}"
+                                    class="text-red-600 px-1 py-2"
+                            >
+                            </p>
                         </div>
                         <!-- Buttons -->
                         <div class="mb-3 flex justify-center space-x-3">

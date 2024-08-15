@@ -6,9 +6,11 @@ import com.rpalival.smart_contacts.helpers.Message;
 import com.rpalival.smart_contacts.helpers.MessageType;
 import com.rpalival.smart_contacts.services.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,18 +83,10 @@ public class PageController {
     // redirect to login page
 
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session){
-//        System.out.println("processing registration");
-//        System.out.println(userForm);
+    public String processRegister(@Valid @ModelAttribute UserForm userForm,
+                                  BindingResult rBindingResult, HttpSession session){
 
-//        User user = User.builder()
-//                .name(userForm.getName())
-//                .email(userForm.getEmail())
-//                .password(userForm.getPassword())
-//                .about(userForm.getAbout())
-//                .phoneNumber(userForm.getPhoneNumber())
-//                .profilePic("https://randomuser.me/api/portraits/women/31.jpg")
-//                .build();
+        if(rBindingResult.hasErrors()) return "register";
 
         User user = new User();
         user.setName(userForm.getName());
