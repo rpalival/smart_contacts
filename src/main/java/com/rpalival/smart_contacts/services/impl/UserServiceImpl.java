@@ -1,12 +1,14 @@
 package com.rpalival.smart_contacts.services.impl;
 
 import com.rpalival.smart_contacts.entities.User;
+import com.rpalival.smart_contacts.helpers.AppConstants;
 import com.rpalival.smart_contacts.helpers.ResourceNotFoundException;
 import com.rpalival.smart_contacts.repositories.UserRepo;
 import com.rpalival.smart_contacts.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -27,6 +32,12 @@ public class UserServiceImpl implements UserService {
         // user id: dynamically generate it
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        //set the user role
+
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
+        logger.info(user.getProvider().toString());
         return userRepo.save(user);
     }
 
