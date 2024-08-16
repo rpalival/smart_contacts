@@ -15,7 +15,7 @@
                     class="block p-6 border-t-[10px] border-green-700 bg-white rounded-xl shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-green-700 dark:hover:bg-gray-600"
             >
                 <!-- message here -->
-                <div th:replace="message :: messagebox"></div>
+                <div th:replace="~{message :: messagebox}"></div>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     Login Here
                 </h5>
@@ -82,6 +82,10 @@
                     </div>
 
                 </form>
+
+                <div class="social-button-container flex justify-center mt-10">
+                    <a class="px-3 py-2 login-with-google-btn" th:href="@{'/oauth2/authorization/google'}">Login with Google</a>
+                </div>
             </div>
         </div>
     </div>

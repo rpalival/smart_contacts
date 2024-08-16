@@ -25,21 +25,12 @@ import java.io.IOException;
 @Configuration
 public class SecurityConfig {
 
-    // create user and login using in memory service
-    // the code below was for testing purposes
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//
-//        UserDetails user1 = User.withDefaultPasswordEncoder().username("admin123").password("admin123").roles("ADMIN", "USER").build();
-//        UserDetails user2 = User.withDefaultPasswordEncoder().username("user123").password("password").build();
-//
-//
-//        var inMemoryUserDetailsManager = new InMemoryUserDetailsManager(user1, user2);
-//        return inMemoryUserDetailsManager;
-//    }
-
     @Autowired
     private SecurityCustomUserDetailService userDetailsService;
+
+    @Autowired
+    private OAuthAuthenticationSuccessHandler handler;
+
 
     // configuration of authentication provider
     @Bean
@@ -54,6 +45,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+
+
 
         httpSecurity.authorizeHttpRequests(authorize->{
 //           authorize.requestMatchers("/home", "/register", "/services").permitAll();
@@ -76,6 +69,12 @@ public class SecurityConfig {
         httpSecurity.logout(logoutForm -> {
             logoutForm.logoutUrl("/logout");
             logoutForm.logoutSuccessUrl("/login?logout=true");
+        });
+
+        // oauth configs
+        httpSecurity.oauth2Login(oauth -> {
+            oauth.loginPage("/login");
+            oauth.successHandler(handler);
         });
 
         return httpSecurity.build();
