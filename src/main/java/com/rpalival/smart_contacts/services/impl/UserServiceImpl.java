@@ -2,6 +2,7 @@ package com.rpalival.smart_contacts.services.impl;
 
 import com.rpalival.smart_contacts.entities.User;
 import com.rpalival.smart_contacts.helpers.AppConstants;
+import com.rpalival.smart_contacts.helpers.ConfigHelper;
 import com.rpalival.smart_contacts.helpers.ResourceNotFoundException;
 import com.rpalival.smart_contacts.repositories.UserRepo;
 import com.rpalival.smart_contacts.services.UserService;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private ConfigHelper configHelper;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
         // user id: dynamically generate it
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(configHelper.passwordEncoder().encode(user.getPassword()));
 
         //set the user role
 

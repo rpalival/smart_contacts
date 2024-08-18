@@ -1,5 +1,6 @@
 package com.rpalival.smart_contacts.config;
 
+import com.rpalival.smart_contacts.helpers.ConfigHelper;
 import com.rpalival.smart_contacts.services.impl.SecurityCustomUserDetailService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,11 +26,18 @@ import java.io.IOException;
 @Configuration
 public class SecurityConfig {
 
-    @Autowired
-    private SecurityCustomUserDetailService userDetailsService;
+    private final SecurityCustomUserDetailService userDetailsService;
+    private final OAuthAuthenticationSuccessHandler successHandler;
+    private final ConfigHelper configHelper;
 
     @Autowired
-    private OAuthAuthenticationSuccessHandler handler;
+    public SecurityConfig(SecurityCustomUserDetailService userDetailsService, OAuthAuthenticationSuccessHandler successHandler, ConfigHelper configHelper) {
+        this.userDetailsService = userDetailsService;
+        this.successHandler = successHandler;
+        this.configHelper = configHelper;
+    }
+
+
 
 
     // configuration of authentication provider
@@ -39,7 +47,7 @@ public class SecurityConfig {
         // user details service object
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         //password encoder object
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(configHelper.passwordEncoder());
         return daoAuthenticationProvider;
     }
 
@@ -74,14 +82,11 @@ public class SecurityConfig {
         // oauth configs
         httpSecurity.oauth2Login(oauth -> {
             oauth.loginPage("/login");
-            oauth.successHandler(handler);
+            oauth.successHandler(successHandler);
         });
 
         return httpSecurity.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 }
