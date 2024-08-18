@@ -1,6 +1,10 @@
 package com.rpalival.smart_contacts.controllers;
 
 
+import com.rpalival.smart_contacts.helpers.Helper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
 
     // user dashboard
     @RequestMapping(value="/dashboard", method= RequestMethod.GET)
@@ -17,7 +23,13 @@ public class UserController {
 
     // user profile page
     @RequestMapping(value="/profile", method=RequestMethod.GET)
-    public String userProfile(){
+    // enter the loggedin user into this profile, you use principal
+    public String userProfile(Authentication authentication){
+
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        logger.info("User logged in: {}", username);
+
+        logger.info("User Profile");
         return "user/profile";
     }
 

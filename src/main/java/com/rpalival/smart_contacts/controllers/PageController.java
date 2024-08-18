@@ -35,12 +35,8 @@ public class PageController {
     }
 
     @RequestMapping("/home")
-    public String home(Model model) {
-        System.out.println("Home page handler");
-        // sending data to view
-        model.addAttribute("name", "Substring Technologies");
-        model.addAttribute("youtubeChannel", "Learn with harry");
-        model.addAttribute("githubRepo", "https://github.com/rpalival/smart_contacts");
+    public String home() {
+        System.out.println("Home page view");
         return "home";
     }
     // about routes
@@ -56,17 +52,23 @@ public class PageController {
         System.out.println("Services page loading");
         return "services";
     }
+
     // contact page
     @GetMapping("/contact")
     public String contact() {
         System.out.println("Contact page loading");
         return "contact";
     }
+
+    // login view
     @GetMapping("/login")
     public String login() {
-        System.out.println("Contact page loading");
+        System.out.println("login page loading");
         return "login";
     }
+
+
+    // SignUp/ register view endpoint
     @GetMapping("/register")
     public String register(Model model) {
 
@@ -81,11 +83,11 @@ public class PageController {
     // processing register / signing up the user
     // fetch form data
     // UserForm class and inside its object we will receive the form data
-
     // save to database
     // message = registration successful
     // redirect to login page
 
+    // registration processing endpoint
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
     public String processRegister(@Valid @ModelAttribute UserForm userForm,
                                   BindingResult rBindingResult, HttpSession session){
@@ -108,6 +110,6 @@ public class PageController {
                 Message.builder().content("Registration Successful").type(MessageType.green).build();
         session.setAttribute("message", message);
 
-        return "redirect:/register";
+        return "redirect:/login";
     }
 }
