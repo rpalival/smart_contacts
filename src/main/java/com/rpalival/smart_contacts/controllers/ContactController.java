@@ -7,9 +7,12 @@ import com.rpalival.smart_contacts.helpers.Helper;
 import com.rpalival.smart_contacts.helpers.Message;
 import com.rpalival.smart_contacts.helpers.MessageType;
 import com.rpalival.smart_contacts.services.ContactService;
+import com.rpalival.smart_contacts.services.ImageService;
 import com.rpalival.smart_contacts.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,17 +22,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/user/contacts")
 public class ContactController {
 
+    private Logger logger = LoggerFactory.getLogger(ContactController.class);
     private final ContactService contactService;
     private final UserService userService;
+    private final ImageService imageService;
 
     @Autowired
-    public ContactController(ContactService contactService, UserService userService){
+    public ContactController(ContactService contactService, UserService userService, ImageService imageService){
         this.contactService = contactService;
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @RequestMapping("/add")
@@ -41,7 +49,6 @@ public class ContactController {
 
     @RequestMapping(value="/add", method= RequestMethod.POST)
     public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result, Authentication authentication, HttpSession session){
-
         // validate form
         // process the contact picture
         // set the contact picture url
@@ -57,8 +64,11 @@ public class ContactController {
 
         String username = Helper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(username);
-        Contact contact = new Contact();
 
+        String filename = UUID.randomUUID().toString();
+        String fileURL = imageService.uploadImage(contactForm.getContactProfileImage(), filename);
+
+        Contact contact = new Contact();
         contact.setName(contactForm.getName());
         contact.setEmail(contactForm.getEmail());
         contact.setFavorite(contactForm.isFavorite());
@@ -67,8 +77,9 @@ public class ContactController {
         contact.setDescription(contactForm.getDescription());
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
+        contact.setPicture(fileURL);
+        contact.setCloudinaryImagePublicId(filename);
         contact.setUser(user);
-
 
         contactService.save(contact);
         System.out.println(contactForm);
