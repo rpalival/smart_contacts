@@ -20,6 +20,7 @@
                 <div
                     class="card block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
                 >
+                    <div th:replace="~{message::messagebox}"></div>
                     <h1 class="text-2xl font-semibold">Add New Contact</h1>
                     <p class="text-gray-500">This contact will be added to your contact list, you can direct email this contact.
                     </p>
@@ -28,41 +29,62 @@
                         th:action="@{'/user/contacts/add'}"
                         th:object="${contactForm}"
                         method="post"
+                        novalidate
                     >
                         <!-- name input field -->
                         <div class="mb-3">
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Name</label>
-                            <div class="relative mb-6">
+                            <div class="relative mb-1">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <i class="fa-solid fa-user-pen w-4 h-4"></i>
                                 </div>
-                                <input th:field="*{name}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name">
+                                <input th:field="*{name}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" required>
                             </div>
+                            <p
+                                class="text-red-600 px-1 py-2"
+                                th:if="${#fields.hasErrors('name')}"
+                                th:errors="*{name}"
+                            >Invalid Name</p>
                         </div>
                         <!-- email input field -->
                         <div class="mb-3">
                             <label for="input-group-2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Email</label>
-                            <div class="relative mb-6">
+                            <div class="relative mb-1">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <i class="fa-solid fa-envelope w-4 h-4"></i>
                                 </div>
                                 <input th:field="*{email}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@gmail.com">
                             </div>
+                            <p
+                                class="text-red-600 px-1 py-2"
+                                th:if="${#fields.hasErrors('email')}"
+                                th:errors="*{email}"
+                            >Invalid Name</p>
                         </div>
                         <!-- phoneNumber input field -->
                         <div class="mb-3">
                             <label for="input-group-3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Phone</label>
-                            <div class="relative mb-6">
+                            <div class="relative mb-1">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <i class="fa-solid fa-phone w-4 h-4"></i>
                                 </div>
                                 <input type="text" th:field="*{phoneNumber}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="234456534">
                             </div>
+                            <p
+                                class="text-red-600 px-1 py-2"
+                                th:if="${#fields.hasErrors('phoneNumber')}"
+                                th:errors="*{phoneNumber}"
+                            >Invalid Name</p>
                         </div>
                         <!-- Address input field -->
                         <div class="mb-3">
                             <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Address</label>
                             <textarea th:field="*{address}" rows="4" class="block p-2.5 w-full h-16 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="contact's address here..."></textarea>
+                            <p
+                                class="text-red-600 px-1 py-2"
+                                th:if="${#fields.hasErrors('address')}"
+                                th:errors="*{address}"
+                            >Invalid Name</p>
                         </div>
                         <!-- Description input field -->
                         <div class="mb-3">
