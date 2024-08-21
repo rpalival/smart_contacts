@@ -19,11 +19,19 @@
     </head>
     <body class="h-screen w-full dark:bg-gray-900 bg-gray-100 dark:text-white">
         <!-- common header -->
-        <div th:replace="~{navbar :: navbar}">
+
+        <!-- if user is logged in : navbar -->
+        <div th:if="${loggedInUser}">
+            <div th:replace="~{user/user_navbar :: user-navbar}"></div>
+        </div>
+
+        <div th:unless="${loggedInUser}">
+            <div th:replace="~{navbar :: navbar}"></div>
+        </div>
 
         </div>
         <!-- main content -->
-        <div class="p-4">
+        <div class="p-4 mt-20">
             <section th:replace="${content}"></section>
         </div>
         <!-- flowbite content -->
