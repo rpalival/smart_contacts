@@ -1,6 +1,7 @@
 package com.rpalival.smart_contacts.services.impl;
 
 import com.rpalival.smart_contacts.entities.Contact;
+import com.rpalival.smart_contacts.entities.User;
 import com.rpalival.smart_contacts.helpers.ResourceNotFoundException;
 import com.rpalival.smart_contacts.repositories.ContactRepo;
 import com.rpalival.smart_contacts.services.ContactService;
@@ -52,5 +53,10 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public List<Contact> search(String name, String email, String phoneNumber) {
         return List.of();
+    }
+
+    @Override
+    public List<Contact> getByUser(User user) {
+        return contactRepo.findByUser(user);
     }
 }
