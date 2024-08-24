@@ -17,11 +17,9 @@ public class Helper {
             String username = "";
 
             if (clientId.equalsIgnoreCase("google")){
-                System.out.println("Getting email from google");
                 username = oauth2User.getAttribute("email").toString();
 
             }else if (clientId.equalsIgnoreCase("github")){
-                System.out.println("Getting email from github");
                 username = oauth2User.getAttribute("email") != null ?
                         oauth2User.getAttribute("email").toString() :
                         oauth2User.getAttribute("login").toString() + "@gmail.com";
@@ -29,7 +27,6 @@ public class Helper {
             return username;
 
         } else {
-            System.out.println("getting data from local database");
             return authentication.getName();
         }
     };

@@ -21,10 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -47,7 +44,7 @@ public class ContactController {
 	}
 	// Concept End: Constructor Injection
 	
-	// Route 1: GET Mapping by default -> To get the contact form field values
+	// Route 1: GET Mapping by default -> To get the contact form field values -> endpoint: /user/contacts/add GET
 	@RequestMapping("/add")
 	public String addContactView(Model model) {
 		ContactForm contactForm = new ContactForm();
@@ -55,7 +52,7 @@ public class ContactController {
 		return "user/add_contact";
 	}
 	
-	// Route 2: -> To save the contact to the Database
+	// Route 2: -> To save the contact to the Database -> endpoint: /user/contacts/add POST
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result
 			, Authentication authentication, HttpSession session) {
@@ -103,7 +100,7 @@ public class ContactController {
 		return "redirect:/user/contacts/add";
 	}
 	
-	// Route 3: -> View contacts
+	// Route 3: -> View contacts -> endpoint: /user/contacts GET
 	@RequestMapping
 	public String viewContacts(
 			@RequestParam(value = "page", defaultValue = "0") int page,
@@ -125,7 +122,7 @@ public class ContactController {
 		return "user/contacts";
 	}
 	
-	// Route 4: -> Search Handler
+	// Route 4: -> Search Handler -> endpoint: /user/contacts/search GET
 	@RequestMapping("/search")
 	public String searchHandler(
 			@ModelAttribute ContactSearchForm contactSearchForm,
@@ -153,5 +150,18 @@ public class ContactController {
 		model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
 		
 		return "user/search";
+	}
+	
+	// Route 5: -> Delete Contact -> endpoint: /user/contacts/delete:{contactId} GET
+	@RequestMapping("/delete/{contactId}")
+	public String deleteContact(@PathVariable("contactId") String contactId, HttpSession session){
+		Contact contact = contactService.getById(contactId);
+		
+		contactService.delete(contactId);
+		logger.info("contact {} with id:{}, deleted", contact.getName(), contactId);
+		Message message =
+				Message.builder().content("You have successfully deleted a contact!!").type(MessageType.green).build();
+		session.setAttribute("message", message);
+		return "redirect:/user/contacts";
 	}
 }

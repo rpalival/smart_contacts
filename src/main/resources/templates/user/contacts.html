@@ -31,6 +31,7 @@
                     <!-- Start of contacts table -->
                     <div class="contacts_container w-full max-w-screen p-5">
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <div th:replace="~{message :: messagebox}"></div>
                             <form th:object="${contactSearchForm}" th:action="@{'/user/contacts/search'}">
                                 <div class="flex space-x-3 pt-5  items-center justify-start flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
                                     <!-- select box-->
@@ -76,76 +77,93 @@
                                 </div>
                             </form>
                             <table th:if="${pageContact.totalElements > 0}" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                <!-- Column Headers -->
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th class="px-6 py-3" scope="col">
-                                        Name
-                                    </th>
-                                    <th class="px-6 py-3" scope="col">
-                                        Phone Number
-                                    </th>
-                                    <th class="px-6 py-3" scope="col">
-                                        Website
-                                    </th>
-                                    <th class="px-6 py-3" scope="col">
-                                        Action
-                                    </th>
-                                </tr>
+                                    <tr>
+                                        <th class="px-6 py-3" scope="col">
+                                            Name
+                                        </th>
+                                        <th class="px-6 py-3" scope="col">
+                                            Phone Number
+                                        </th>
+                                        <th class="px-6 py-3" scope="col">
+                                            Website
+                                        </th>
+                                        <th class="px-6 py-3" scope="col">
+                                            Action
+                                        </th>
+                                    </tr>
                                 </thead>
+                                <!-- Rows Content -->
                                 <tbody>
-                                <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                        th:each="c : ${pageContact.getContent()}"
-                                        th:object="${c}">
-                                    <th class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                                        scope="row">
-                                        <img
-                                                alt="Jesse image"
-                                                class="w-10 h-10 rounded-full"
-                                                onerror="this.src='https://iconduck.com/icons/6491/profile-default'"
-                                                src=""
-                                                th:src="@{*{picture}}"
+                                    <tr
+                                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                                            th:each="c : ${pageContact.getContent()}"
+                                            th:object="${c}"
+                                    >
+                                        <!-- 1st Column: Profile picture, name and email -->
+                                        <th class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                                            scope="row"
                                         >
-                                        <div class="ps-3">
-                                            <div class="text-base font-semibold" th:text="*{name}">Neil
-                                                Sims
+                                            <img
+                                                    alt="profile image"
+                                                    class="w-10 h-10 rounded-full"
+                                                    onerror="this.src='/images/defaultProfileImage.png'"
+                                                    src=""
+                                                    th:src="@{*{picture}}"
+                                            >
+                                            <div class="ps-3">
+                                                <div class="text-base font-semibold" th:text="*{name}">Neil
+                                                    Sims
+                                                </div>
+                                                <div class="font-normal text-gray-500" th:text="*{email}">
+                                                    neil.sims@flowbite.com
+                                                </div>
                                             </div>
-                                            <div class="font-normal text-gray-500" th:text="*{email}">
-                                                neil.sims@flowbite.com
+                                        </th>
+
+                                        <!-- 2nd Column: PhoneNumber -->
+                                        <td class="px-6 py-4">
+                                            <i class="fa-solid fa-phone w-5 h-5"></i>
+                                            <span th:text="*{phoneNumber}"></span>
+                                        </td>
+
+                                        <!-- 3rd Column: links and isFavorite dot icon -->
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"
+                                                     th:if="*{favorite}"></div>
+                                                <div class="h-2.5 w-2.5 me-2" th:unless="*{favorite}"></div>
+                                                <a target="_blank" th:href="@{*{websiteLink}}">
+                                                    <i class="fa-solid fa-globe w-5 h-5"></i>
+                                                </a>
+                                                <a target="_blank" th:href="@{*{websiteLink}}">
+                                                    <i class="fa-brands fa-linkedin w-5 h-5"></i>
+                                                </a>
                                             </div>
-                                        </div>
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        <i class="fa-solid fa-phone w-5 h-5"></i>
-                                        <span th:text="*{phoneNumber}"></span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-2">
-                                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"
-                                                 th:if="*{favorite}"></div>
-                                            <div class="h-2.5 w-2.5 me-2" th:unless="*{favorite}"></div>
-                                            <a target="_blank" th:href="@{*{websiteLink}}">
-                                                <i class="fa-solid fa-globe w-5 h-5"></i>
-                                            </a>
-                                            <a target="_blank" th:href="@{*{websiteLink}}">
-                                                <i class="fa-brands fa-linkedin w-5 h-5"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-2">
-                                            <a href="">
-                                                <i class="fa-solid w-6 h-6 fa-trash"></i>
-                                            </a>
-                                            <a href="">
-                                                <i class="fa-solid fa-pen w-6 h-6"></i>
-                                            </a>
-                                            <a href="">
-                                                <i class="fa-solid w-6 h-6 fa-eye"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+
+                                        <!-- 4th Column: action buttons -> delete,update,view icons -->
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <!-- Delete Icon -->
+<!--                                                <a th:href="@{'/user/contacts/delete/'+*{id}}">-->
+<!--                                                    <i class="fa-solid w-6 h-6 fa-trash"></i>-->
+<!--                                                </a>-->
+                                                <button th:onclick="deleteContact([[${c.id}]])">
+                                                    <i class="fa-solid w-6 h-6 fa-trash"></i>
+                                                </button>
+                                                <!-- Update Icon -->
+                                                <a href="">
+                                                    <i class="fa-solid fa-pen w-6 h-6"></i>
+                                                </a>
+                                                <!-- View Icon -->
+                                                <button th:onclick="loadContactData([[${c.id}]])">
+                                                    <i class="fa-solid w-6 h-6 fa-eye"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <!-- pagination component-->
@@ -187,8 +205,10 @@
                     </div>
                     <!-- end of contacts table -->
                 </div>
+                <div th:replace="~{user/contact_modals::contact}"></div>
             </div>
         </div>
+        <script th:src="@{'/js/contacts.js'}"></script>
         <script>
             console.log("user profile page");
         </script>
