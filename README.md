@@ -1,5 +1,6 @@
 # Smart Contacts Management System
-
+> [!IMPORTANT]  
+> The project is in progress and README.md will be often updated accordingly.
 ## Project Overview
 
 Smart Contacts Management System is a web-based application that allows users to manage their contacts effectively. The application provides features like creating, reading, updating, and deleting contacts. It also supports OAuth2 authentication with Google and GitHub, alongside custom login logic. The application is built using Java, Spring Boot, Spring MVC pattern, Thymeleaf, Vanilla JavaScript and Flowbite UI.
@@ -40,8 +41,6 @@ Smart Contacts Management System is a web-based application that allows users to
 1. Open your web browser and navigate to `http://localhost:8081` to access the application.
 2. Sign up for an account using the custom login logic or use the OAuth2 authentication with Google and GitHub.
 3. After successful login, you can create, read, update, and delete contacts from the application.
-
-Smart Contacts Management System is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ### Contact
 
