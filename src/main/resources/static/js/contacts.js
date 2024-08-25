@@ -1,4 +1,3 @@
-console.log("contacts script loaded");
 const baseURL = "http://localhost:8081";
 const viewContactModal = document.getElementById('view_contact_modal');
 
