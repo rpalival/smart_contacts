@@ -1,5 +1,3 @@
-console.log("Script loaded");
-
 let currentTheme = getTheme();
 
 document.addEventListener('DOMContentLoaded', () => {

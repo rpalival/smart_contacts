@@ -30,6 +30,7 @@
         </div>
         <div class="contacts_container w-full max-w-screen p-5">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <div th:replace="~{message :: messagebox}"></div>
                 <!--/*@thymesVar id="ContactSearchForm" type=""*/-->
                 <form th:object="${contactSearchForm}" th:action="@{'/user/contacts/search'}">
                     <div class="flex space-x-3 pt-5  items-center justify-start flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
@@ -76,6 +77,7 @@
                     </div>
                 </form>
                 <table th:if="${pageContact.totalElements > 0}" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <!-- Column Headers -->
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th class="px-6 py-3" scope="col">
@@ -92,13 +94,17 @@
                         </th>
                     </tr>
                     </thead>
+                    <!-- Rows Content -->
                     <tbody>
                     <tr
                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                             th:each="c : ${pageContact.getContent()}"
-                            th:object="${c}">
+                            th:object="${c}"
+                    >
+                        <!-- 1st Column: Profile picture, name and email -->
                         <th class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                            scope="row">
+                            scope="row"
+                        >
                             <!--suppress ThymeleafVariablesResolveInspection -->
                             <img
                                     alt="Jesse image"
@@ -118,11 +124,13 @@
                                 </div>
                             </div>
                         </th>
+                        <!-- 2nd Column: PhoneNumber -->
                         <td class="px-6 py-4">
                             <i class="fa-solid fa-phone w-5 h-5"></i>
                             <!--suppress ThymeleafVariablesResolveInspection -->
                             <span th:text="*{phoneNumber}"></span>
                         </td>
+                        <!-- 3rd Column: links and isFavorite dot icon -->
                         <td class="px-6 py-4">
                             <div class="flex items-center space-x-2">
                                 <!--suppress ThymeleafVariablesResolveInspection -->
@@ -140,14 +148,18 @@
                                 </a>
                             </div>
                         </td>
+                        <!-- 4th Column: action buttons -> delete,update,view icons -->
                         <td class="px-6 py-4">
                             <div class="flex items-center space-x-2">
-                                <a th:href="@{'/user/contacts/delete/'+*{id}}">
+                                <!-- Delete Icon -->
+                                <button th:onclick="deleteContact([[${c.id}]])">
                                     <i class="fa-solid w-6 h-6 fa-trash"></i>
-                                </a>
-                                <a href="">
+                                </button>
+                                <!-- Update Icon -->
+                                <a th:href="@{'/user/contacts/view/'+*{id}}">
                                     <i class="fa-solid fa-pen w-6 h-6"></i>
                                 </a>
+                                <!-- View Icon -->
                                 <button th:onclick="loadContactData([[${c.id}]])">
                                     <i class="fa-solid w-6 h-6 fa-eye"></i>
                                 </button>
@@ -197,10 +209,6 @@
     </div>
 </div>
 <script th:src="@{'/js/contacts.js'}"></script>
-<script>
-    console.log("contact search form");
-</script>
-
 
 </body>
 </html>

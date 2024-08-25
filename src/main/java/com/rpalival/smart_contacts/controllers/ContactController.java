@@ -71,10 +71,6 @@ public class ContactController {
 		String username = Helper.getEmailOfLoggedInUser(authentication);
 		User user = userService.getUserByEmail(username);
 		
-		// Logic: To store the filename separately
-		String filename = UUID.randomUUID().toString();
-		String fileURL = imageService.uploadImage(contactForm.getContactProfileImage(), filename);
-		
 		Contact contact = new Contact();
 		
 		// Logic: Setter methods of contact entity in which getter methods of contact entity are
@@ -87,9 +83,15 @@ public class ContactController {
 		contact.setDescription(contactForm.getDescription());
 		contact.setWebsiteLink(contactForm.getWebsiteLink());
 		contact.setLinkedInLink(contactForm.getLinkedInLink());
-		contact.setPicture(fileURL);
-		contact.setCloudinaryImagePublicId(filename);
 		contact.setUser(user);
+		
+		if (contactForm.getContactProfileImage() != null && !contactForm.getContactProfileImage().isEmpty()) {
+			String filename = UUID.randomUUID().toString();
+			String fileURL = imageService.uploadImage(contactForm.getContactProfileImage(), filename);
+			contact.setPicture(fileURL);
+			contact.setCloudinaryImagePublicId(filename);
+		}
+		
 		
 		// This saves it to database
 		contactService.save(contact);
@@ -159,9 +161,67 @@ public class ContactController {
 		
 		contactService.delete(contactId);
 		logger.info("contact {} with id:{}, deleted", contact.getName(), contactId);
-		Message message =
-				Message.builder().content("You have successfully deleted a contact!!").type(MessageType.green).build();
+		Message message = Message.builder().content("You have successfully deleted a contact!!").type(MessageType.green).build();
 		session.setAttribute("message", message);
 		return "redirect:/user/contacts";
+	}
+	
+	// Route 6: -> Update Contact View -> endpoint: /user/contacts/view:{contactId} GET
+	@RequestMapping("/view/{contactId}")
+	public String updateContactFormView(@PathVariable("contactId") String contactId, Model model){
+		var contact = contactService.getById(contactId);
+		ContactForm contactForm = new ContactForm();
+		contactForm.setName(contact.getName());
+		contactForm.setEmail(contact.getEmail());
+		contactForm.setPhoneNumber(contact.getPhoneNumber());
+		contactForm.setAddress(contact.getAddress());
+		contactForm.setDescription(contact.getDescription());
+		contactForm.setFavorite(contact.isFavorite());
+		contactForm.setWebsiteLink(contact.getWebsiteLink());
+		contactForm.setLinkedInLink(contact.getLinkedInLink());
+		contactForm.setPicture(contact.getPicture());
+		
+		model.addAttribute("contactForm", contactForm);
+		model.addAttribute("contactId", contactId);
+		return "user/update_contact_view";
+	};
+	
+	// Route 7: -> Update Contact Processing -> endpoint: /user/contacts/update:{contactId} POST
+	@RequestMapping(value="/update/{contactId}", method = RequestMethod.POST)
+	public String updateContact(@PathVariable("contactId") String contactId, @Valid @ModelAttribute ContactForm contactForm, BindingResult bindingResult, Model model, HttpSession session){
+		
+		if(bindingResult.hasErrors()){
+			return "user/update_contact_view";
+		}
+		
+		var newContact = contactService.getById(contactId);
+		newContact.setId(contactId);
+		newContact.setName(contactForm.getName());
+		newContact.setEmail(contactForm.getEmail());
+		newContact.setFavorite(contactForm.isFavorite());
+		newContact.setPhoneNumber(contactForm.getPhoneNumber());
+		newContact.setAddress(contactForm.getAddress());
+		newContact.setDescription(contactForm.getDescription());
+		newContact.setWebsiteLink(contactForm.getWebsiteLink());
+		newContact.setLinkedInLink(contactForm.getLinkedInLink());
+		
+		if(contactForm.getContactProfileImage() !=null && !contactForm.getContactProfileImage().isEmpty()){
+			logger.info("file is not empty");
+			String filename = UUID.randomUUID().toString();
+			String fileURL = imageService.uploadImage(contactForm.getContactProfileImage(), filename);
+			newContact.setCloudinaryImagePublicId(filename);
+			newContact.setPicture(fileURL);
+			contactForm.setPicture(fileURL);
+		} else {
+			logger.info("file is not empty");
+		}
+		
+		var updatedContact = contactService.update(newContact);
+		logger.info("updated contact {}", updatedContact);
+		Message message = Message.builder().content("You have successfully updated the contact!!").type(MessageType.green).build();
+		session.setAttribute("message", message);
+		model.addAttribute("message", message);
+		
+		return "redirect:/user/contacts/view/" + contactId;
 	}
 }
