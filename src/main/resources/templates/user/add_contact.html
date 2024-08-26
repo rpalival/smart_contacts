@@ -119,16 +119,16 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Image</label>
                         <div class="mb-3 flex space-x-5">
                             <input id="image_file_input" th:field="*{contactProfileImage}" class="block w-full text-xs text-gray-800 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">
-                            <p
-                                    class="text-red-500"
-                                    data-th-if="${#fields.hasErrors('contactProfileImage')}"
-                                    data-th-errors="*{contactProfileImage}"
-                            >
-                                Invalid Name
-                            </p>
 
                             <img class="max-h-52 mx-auto rounded-lg shadow" src="" id="upload_image_preview" alt="">
                         </div>
+                        <p
+                                class="text-red-500"
+                                data-th-if="${#fields.hasErrors('contactProfileImage')}"
+                                data-th-errors="*{contactProfileImage}"
+                        >
+                            Invalid Name
+                        </p>
 
                         <!-- Favourite contact checkbox -->
                         <div class="flex items-center mb-3">
