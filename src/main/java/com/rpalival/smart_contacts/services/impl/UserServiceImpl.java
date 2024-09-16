@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         user.setEmailToken(emailToken);
         User savedUser = userRepo.save(user);
         String emailLink = Helper.getLinkForEmailVerification(emailToken);
-        emailService.sendEmail(savedUser.getEmail(), "Verify Account : Smart Contacts Verification", emailLink);
+        emailService.sendEmail(savedUser.getEmail(), "Verify Account : Smart Contacts Email Verification", emailLink);
         
         return savedUser;
         
