@@ -3,8 +3,10 @@ package com.rpalival.smart_contacts.services.impl;
 import com.rpalival.smart_contacts.entities.User;
 import com.rpalival.smart_contacts.helpers.AppConstants;
 import com.rpalival.smart_contacts.helpers.ConfigHelper;
+import com.rpalival.smart_contacts.helpers.Helper;
 import com.rpalival.smart_contacts.helpers.ResourceNotFoundException;
 import com.rpalival.smart_contacts.repositories.UserRepo;
+import com.rpalival.smart_contacts.services.EmailService;
 import com.rpalival.smart_contacts.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+    
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private ConfigHelper configHelper;
@@ -39,7 +44,14 @@ public class UserServiceImpl implements UserService {
 
         user.setRoleList(List.of(AppConstants.ROLE_USER));
         logger.info(user.getProvider().toString());
-        return userRepo.save(user);
+        String emailToken= UUID.randomUUID().toString();
+        user.setEmailToken(emailToken);
+        User savedUser = userRepo.save(user);
+        String emailLink = Helper.getLinkForEmailVerification(emailToken);
+        emailService.sendEmail(savedUser.getEmail(), "Verify Account : Smart Contacts Email Verification", emailLink);
+        
+        return savedUser;
+        
     }
 
     @Override

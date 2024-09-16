@@ -9,6 +9,8 @@ public class AppConstants {
     public static final String CONTACT_IMAGE_CROP = "fill";
 
     public static final int PAGE_SIZE = 10;
+    
+    public static final String DEFAULT_USER_PROFILE_PIC = "https://randomuser.me/api/portraits/women/31.jpg";
 }
 
 

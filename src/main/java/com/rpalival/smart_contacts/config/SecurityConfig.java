@@ -15,13 +15,20 @@ public class SecurityConfig {
 
     private final SecurityCustomUserDetailService userDetailsService;
     private final OAuthAuthenticationSuccessHandler successHandler;
+    private final AuthFailureHandler authFailureHandler;
     private final ConfigHelper configHelper;
 
     @Autowired
-    public SecurityConfig(SecurityCustomUserDetailService userDetailsService, OAuthAuthenticationSuccessHandler successHandler, ConfigHelper configHelper) {
+    public SecurityConfig(
+            SecurityCustomUserDetailService userDetailsService,
+            OAuthAuthenticationSuccessHandler successHandler,
+            ConfigHelper configHelper,
+            AuthFailureHandler authFailureHandler
+    ) {
         this.userDetailsService = userDetailsService;
         this.successHandler = successHandler;
         this.configHelper = configHelper;
+        this.authFailureHandler = authFailureHandler;
     }
 
 
@@ -56,7 +63,8 @@ public class SecurityConfig {
 //            formLogin.failureForwardUrl("/login?error=true");
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
-
+            
+            formLogin.failureHandler(authFailureHandler);
         });
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);

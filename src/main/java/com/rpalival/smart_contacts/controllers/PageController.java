@@ -2,6 +2,7 @@ package com.rpalival.smart_contacts.controllers;
 
 import com.rpalival.smart_contacts.entities.User;
 import com.rpalival.smart_contacts.forms.UserForm;
+import com.rpalival.smart_contacts.helpers.AppConstants;
 import com.rpalival.smart_contacts.helpers.Message;
 import com.rpalival.smart_contacts.helpers.MessageType;
 import com.rpalival.smart_contacts.services.UserService;
@@ -79,14 +80,7 @@ public class PageController {
 
         return "register";
     }
-
-    // processing register / signing up the user
-    // fetch form data
-    // UserForm class and inside its object we will receive the form data
-    // save to database
-    // message = registration successful
-    // redirect to login page
-
+    
     // registration processing endpoint
     @RequestMapping(value="/do-register", method = RequestMethod.POST)
     public String processRegister(@Valid @ModelAttribute UserForm userForm,
@@ -100,7 +94,8 @@ public class PageController {
         user.setPassword(userForm.getPassword());
         user.setAbout(userForm.getAbout());
         user.setPhoneNumber(userForm.getPhoneNumber());
-        user.setProfilePic("https://randomuser.me/api/portraits/women/31.jpg");
+        user.setProfilePic(AppConstants.DEFAULT_USER_PROFILE_PIC);
+        user.setEnabled(false);
 
         User savedUser = userService.saveUser(user);
         System.out.println("User saved");

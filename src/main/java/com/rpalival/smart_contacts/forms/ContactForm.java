@@ -33,7 +33,7 @@ public class ContactForm {
     private String websiteLink;
     private String linkedInLink;
     
-    @ValidFile(message = "Invalid File")
+    @ValidFile
     private MultipartFile contactProfileImage;
     private String picture;
     
