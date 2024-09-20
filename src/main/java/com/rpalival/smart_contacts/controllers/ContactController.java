@@ -59,6 +59,7 @@ public class ContactController {
 		
 		// Logic: Redirect to same page if form has errors
 		if (result.hasErrors()) {
+			result.getAllErrors().forEach(error -> logger.info(error.toString()));
 			Message errorMessage = Message.builder().
 					                       content("Please correct the following errors").
 					                       type(MessageType.red).

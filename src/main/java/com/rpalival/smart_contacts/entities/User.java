@@ -87,6 +87,10 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return this.enabled;
     }
+    
+    public int getContactCount() {
+        return contacts.size();
+    }
 
 }
 

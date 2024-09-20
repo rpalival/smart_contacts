@@ -13,10 +13,25 @@
 
         </div>
     </div>
-    <div class="sm:pl-64 pt-20" style="height: 1000px">
-        <div class="flex flex-col justify-center items-center">
-            <h1 class="text-5xl">Welcome to Profile Page</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptate.</p>
+    <div class="sm:pl-64 pt-20">
+        <div class="flex flex-col justify-center md:pt-32 items-center">
+        <!-- profile card -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-4xl w-full">
+                <div class="flex flex-col items-center">
+                    <img
+                            onerror="this.onerror=null; this.src='/images/defaultProfileImage.png';"
+                            th:src="@{${loggedInUser.profilePic}}" src="path/to/profilePic.jpg" alt="Profile Photo" class="w-44 h-44 rounded-full shadow-lg object-cover mb-4">
+                    <h2 class="text-2xl font-semibold mb-2" th:text="${loggedInUser.name}">User Name</h2>
+                    <p class="mb-2" th:text="${loggedInUser.email}">user.email@example.com</p>
+                    <p class="mb-2" th:text="${loggedInUser.phoneNumber}">123-456-7890</p>
+                    <p class="mb-4 text-center" th:text="${loggedInUser.about}">About the user...</p>
+                    <div class="w-full flex justify-between">
+                        <p class="text-sm">Email Verified: <span class="font-medium" id="email-verified" th:text="${loggedInUser.emailVerified ? 'YES':'NO'}">No</span></p>
+                        <p class="mb-2">Number of Contacts: <span th:text="${loggedInUser.contactCount}">0</span></p>
+<!--                        <p class="text-sm text-gray-500">Phone Verified: <span class="font-medium text-gray-700" id="phone-verified" th:text="${loggedInUser.phoneVerified ? 'YES':'NO'}">No</span></p>-->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

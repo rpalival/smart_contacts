@@ -39,3 +39,9 @@
         cursor: not-allowed;
     }
 }
+.custom-home-bg {
+    background-color: rgb(255,247,232);
+}
+.border-true-black {
+    border-color: rgb(0, 0, 0);
+}

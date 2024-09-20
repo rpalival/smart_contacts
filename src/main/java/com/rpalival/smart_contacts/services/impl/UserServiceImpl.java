@@ -32,6 +32,9 @@ public class UserServiceImpl implements UserService {
     private ConfigHelper configHelper;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    
+    @Autowired
+    private Helper helper;
 
     @Override
     public User saveUser(User user) {
@@ -47,7 +50,7 @@ public class UserServiceImpl implements UserService {
         String emailToken= UUID.randomUUID().toString();
         user.setEmailToken(emailToken);
         User savedUser = userRepo.save(user);
-        String emailLink = Helper.getLinkForEmailVerification(emailToken);
+        String emailLink = helper.getLinkForEmailVerification(emailToken);
         emailService.sendEmail(savedUser.getEmail(), "Verify Account : Smart Contacts Email Verification", emailLink);
         
         return savedUser;

@@ -1,4 +1,5 @@
-const baseURL = "http://localhost:8081";
+// const baseURL = "http://localhost:8081";
+const baseURL = "https://smartcontacts.rajpalival.me";
 const viewContactModal = document.getElementById('view_contact_modal');
 
 // options with default values

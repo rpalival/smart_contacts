@@ -22,9 +22,9 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 			return true;
 		}
 		// file size
+		System.out.println("file size: " + file.getSize());
 		
 		if (file.getSize() > MAX_FILE_SIZE) {
-			System.out.println("Max file size crossed!");
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate("File size should be less than 2MB").addConstraintViolation();
 			return false;
