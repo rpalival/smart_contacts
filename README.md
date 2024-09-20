@@ -1,9 +1,13 @@
 # Smart Contacts Management System
 > [!IMPORTANT]  
-> The project is in progress and README.md will be often updated accordingly.
+> The project is in up and running and live link is: https://smartcontacts.rajpalival.me/home.
+> Since the new user has to verify his email unless he/she is signing in using google or GitHub,
+> So I have created a dummy user for testing purposes.
+> Email: admin@gmail.com
+> Password: admin
 ## Project Overview
 
-Smart Contacts Management System is a web-based application that allows users to manage their contacts effectively. The application provides features like creating, reading, updating, and deleting contacts. It also supports OAuth2 authentication with Google and GitHub, alongside custom login logic. The application is built using Java, Spring Boot, Spring MVC pattern, Thymeleaf, Vanilla JavaScript and Flowbite UI.
+Smart Contacts Management System is a web-based application that allows users to manage their contacts effectively. The application provides features like creating, reading, updating, and deleting contacts. It also supports OAuth2 authentication with Google and GitHub, alongside custom login logic. The application is built using Java, Spring Boot, Spring MVC pattern, Thymeleaf, Vanilla JavaScript and Flow bite UI.
 
 ## Key Features
 
@@ -11,7 +15,7 @@ Smart Contacts Management System is a web-based application that allows users to
 * **Pagination**: The application supports pagination for the contacts list, allowing users to navigate through the contacts list with ease.
 * **Searching**: Users can search for contacts based on various criteria like name, email, phone number, etc.
 * **OAuth2 Authentication**: The application supports OAuth2 authentication with Google and GitHub.
-* **Custom Login Logic**: The application supports custom login logic for users who prefer to login with their email and password.
+* **Custom Login Logic**: The application supports custom login logic for users who prefer to log in with their email and password.
 
 ## Technologies Used
 
