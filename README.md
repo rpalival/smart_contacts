@@ -1,6 +1,8 @@
 # Smart Contacts Management System
 > [!IMPORTANT]  
-> The project is in up and running and live link is: https://smartcontacts.rajpalival.me/home.
+> The project was up and running and live at: https://smartcontacts.rajpalival.me/home.
+> But unfortunately AWS started billing me with $50 and I can't really afford it for now hence
+> I will be finding alternate ways to host it for free.
 > Since the new user has to verify his email unless he/she is signing in using google or GitHub,
 > So I have created a dummy user for testing purposes.
 > Email: admin@gmail.com
