@@ -5,6 +5,7 @@
 > So I have created a dummy user for testing purposes.
 > Email: admin@gmail.com
 > Password: admin
+
 > [!IMPORTANT]  
 > But unfortunately AWS started billing me with $50 and I can't really afford it for now hence
 > I will be finding alternate ways to host it for free.
