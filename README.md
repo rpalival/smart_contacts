@@ -1,12 +1,13 @@
 # Smart Contacts Management System
 > [!IMPORTANT]  
 > The project was up and running and live at: https://smartcontacts.rajpalival.me/home.
-> But unfortunately AWS started billing me with $50 and I can't really afford it for now hence
-> I will be finding alternate ways to host it for free.
 > Since the new user has to verify his email unless he/she is signing in using google or GitHub,
 > So I have created a dummy user for testing purposes.
 > Email: admin@gmail.com
 > Password: admin
+> [!IMPORTANT]  
+> But unfortunately AWS started billing me with $50 and I can't really afford it for now hence
+> I will be finding alternate ways to host it for free.
 ## Project Overview
 
 Smart Contacts Management System is a web-based application that allows users to manage their contacts effectively. The application provides features like creating, reading, updating, and deleting contacts. It also supports OAuth2 authentication with Google and GitHub, alongside custom login logic. The application is built using Java, Spring Boot, Spring MVC pattern, Thymeleaf, Vanilla JavaScript and Flow bite UI.
